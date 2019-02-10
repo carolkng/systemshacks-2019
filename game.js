@@ -10,6 +10,7 @@ window.onload = function() {
 	var gameArea = document.getElementById("gameArea");
 	var textArea = document.getElementById("textArea");
 	var scoreArea = document.getElementById("score");
+	var scoreContainer = document.getElementById("scoreArea");
 	//var levelArea = document.getElementById("level");
 	var timerArea = document.getElementById("timer");
 	var purposeArea = document.getElementById("purpose");
@@ -22,6 +23,7 @@ window.onload = function() {
 	var cursor = 0;
 
 	var GET_HACKING_TIME = 300; // Show get hacking notification for 200ms
+	var FLASH_TIME = 100;
 	var LEVEL_TIME = 10;
 	var SECONDS = 750; // change back to 1000 for normal time, shorten for testing
 	var KEY_SCORE = 30;
@@ -70,17 +72,17 @@ MD5_HASH=$(cat /tmp/secret)
 PASSWORD_WRONG=1
 
 while [ $PASSWORD_WRONG -eq 1 ]
- do
-    echo "Enter your password:"
-    read -s ENTERED_PASSWORD
-    if [ "$MD5_HASH" != "$(echo $ENTERED_PASSWORD | md5sum | cut -d '-' -f 1)" ]; then
-        echo "Access Denied: Incorrenct password!. Try again"
-    else
-        echo "Access Granted"
-    	echo "you have been hacked"
-        PASSWORD_WRONG=0
-    fi
-done
+	do
+    	echo "Enter your password:"
+    	read -s ENTERED_PASSWORD
+    	if [ "$MD5_HASH" != "$(echo $ENTERED_PASSWORD | md5sum | cut -d '-' -f 1)" ]; then
+        	echo "Access Denied: Incorrenct password!. Try again"
+    	else
+        	echo "Access Granted"
+    		echo "you have been hacked"
+        	PASSWORD_WRONG=0
+    	fi
+	done
 `,
 `The Matrix is everywhere, it is all around us.
 Even now, in this very room.
@@ -289,7 +291,7 @@ To sit on my throne as the Prince of Bel-Air
 			outputArea.innerHTML += currOut[(cursor % currOut.length)].replace("\n", "<br>") + " ";
 		}
 		cursor++;
-		if ((cursor % 50) === 0)
+		if ((cursor % 5) === 0)
 			outputArea.scrollTop = outputArea.scrollHeight;
 	}
 
@@ -312,6 +314,7 @@ To sit on my throne as the Prince of Bel-Air
 
 		// Push the right letter to the thing
 		addOutput(textArea.value.length);
+		flashScore();
 	}
 
 	function showGetHacking(text) {
@@ -343,6 +346,12 @@ To sit on my throne as the Prince of Bel-Air
 		for (var i = 0; i < OUTPUTS.length; i++) {
 			OUTPUT_WORDS.push(OUTPUTS[i].split(" "));
 		}
+	}
+	function flashScore() {
+		scoreContainer.setAttribute("style", "background-color:green;");
+		setTimeout(function() {
+			scoreContainer.removeAttribute("style");
+		}, FLASH_TIME);
 	}
 	preInit();
 }
