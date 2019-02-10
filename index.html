@@ -11,15 +11,18 @@
 		<link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
+    	<script src="emitter.js"></script>
     	<div id="overlay">
     	<div id="popup">
     		<h1>HACK THE 90s: A GAME FOR KEYBOARD HATERS</h1>
+    		<p></p>
     		<button id="start"> START </button>
+    		<button id="next" hidden> HACK </button>
     	</div>
   	  	</div>
 
-  	  	<div id="getHacking">GET HACKING!!!</div>
-  	  	
+  	  	<div id="getHacking" hidden><div id="getHackingInner">GET HACKING!!!</div></div>
+
     	<div id="gameArea">
     		<div id="statusBar">
 				<div class="status" id="scoreArea"> SCORE: <span id="score">0</span> </div>
@@ -57,7 +60,6 @@
 			<textarea id="textArea" style="height:0; width:0;">TYPE HERE</textarea>
 		</div>
 
-		<script src="emitter.js"></script>
     	<script src="game.js"></script>
     </body>
 </html>

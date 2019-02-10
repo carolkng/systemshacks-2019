@@ -53,36 +53,40 @@ body {
 
 #monitor {
   margin: 0px auto;
-  border: 20px solid grey;
-  border-radius: 10px;
+  border: 20px solid #C0B7A6;
+  border-radius: 2px;
   width: 560px;
-  height: 280px;
+  height: 440px;
   color: black;
-  margin
 }
 
 #output {
-  border-color: black;
-  border-width: 30px;
-  border-style:solid;
-  background: black;
+  border: 30px solid #40433C;
+  padding: 20px;
+  background: #40433C;
+  background-image: url(monitor.png);
+  background-size:cover;
   color: #80FF80;
   overflow: auto;
-  height:220px;
+  height:340px;
 }
 
 /* POPUP */
 #popup {
   z-index: 100;
   position: fixed;
-  margin: 10% 20%;
+  top:30%;
+  left: 50%;
+  margin-left: -225px;
+  margin-top: -100px;
   border: 10px solid red;
-  box-shadow: 2px 2px green;
+  box-shadow: 10px 10px green;
   background: black;
   text-shadow: 2px 0px 0px yellow;
   color: red;
   padding: 40px;
   font-size: 30px;
+  width: 350px;
 }
 
 #overlay {
@@ -92,9 +96,8 @@ body {
   position:fixed;
 }
 
-#start {
+button {
   position: relative;
-  width: 130px;
 
   padding: 10px 20px;
   margin: 4px;
@@ -109,13 +112,68 @@ body {
   font-size: 30px;
   font-family: 'VT323', monospace;
   color: #fff;
-  background-color: #209cee;
-  box-shadow: inset -4px -4px #006bb3;
+  background-color: #e76e55;
+  box-shadow: inset -4px -4px #8c2022;
+}
+button:hover {
+  background-color: #ce372b;
+  box-shadow: inset -6px -6px #8c2022;
+}
+button:active {
+  box-shadow: inset 4px 4px #8c2022;
+}
+#start {
+  width: 130px;
+}
+#next {
+  width: auto;
+}
+
+#getHacking {
+  position: fixed;
+  width: 400px;
+  top: 49vh;
+  left: 50%;
+  margin-left: -200px;
+  font-size: 40px;
+  border: 3px double red;
+  color: white;
+  background-color: rgba(0,0,0,0.7);
+  animation-name: outerFlash;
+  animation-duration: 0.4s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-play-state: running;
+}
+
+@keyframes outerFlash {
+  from {
+    border-color: red;
+  }
+  to {
+    border-color: black;
+  }
 }
 
 #getHackingInner {
-
+  border: 3px double yellow;
+  color: yellow;
+  text-align: center;
+  padding: 20px;
+  text-shadow: 4px 4px 0px red;
+  animation-name: innerFlash;
+  animation-duration: 0.4s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-play-state: running;
 }
-#getHacking {
-
+@keyframes innerFlash {
+  from {
+    border-color: green;
+  }
+  to {
+    border-color: yellow;
+  }
 }

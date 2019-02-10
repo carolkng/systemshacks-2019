@@ -1,6 +1,10 @@
 // Start the game!
 window.onload = function() {
 	var butt = document.getElementById("start");
+	var nextbutt = document.getElementById("next");
+	var popup = document.getElementById("popup");
+	var popupHeader = popup.querySelector('h1');
+	var popupContent = popup.querySelector('p');
 	var overlay = document.getElementById("overlay");
 	var overlayParent = overlay.parentNode;
 	var gameArea = document.getElementById("gameArea");
@@ -10,13 +14,15 @@ window.onload = function() {
 	var timerArea = document.getElementById("timer");
 	var purposeArea = document.getElementById("purpose");
 	var outputArea = document.getElementById("output");
-
+	var getHacking = document.getElementById("getHacking");
+	var getHackingText = document.getElementById("getHackingInner");
 	var emitter = new EventEmitter();
 
 	var gameStarted = false;
 	var cursor = 0;
 
-	var LEVEL_TIME = 15;
+	var GET_HACKING_TIME = 500; // Show get hacking notification for 2s
+	var LEVEL_TIME = 10;
 	var SECONDS = 500; // change back to 1000 for normal time, shorten for testing
 	var KEY_SCORE = 30;
 	var BONUS_SCORE = 20; // bonus score per letter pressed in the keyword list or whatever
@@ -49,13 +55,19 @@ window.onload = function() {
 	"https://media.giphy.com/media/svw5mZJdFB41G/giphy.gif"
 	];
 
+	var POPUPS = [
+`Your computer is busted, and it looks like someone else hacked into your mainframe.`,
+`Your world is the computer, and you're sick of the world. It's time to end it all.`,
+`You're sick of hemorrhaging money for food, especially when the Sun exists as a source of energy. What if you became a plant?`,
+`You decide to go back to the best decade ever and make it better. You decide to imbue the world with your hacker groove.`
+	]
+
 	var OUTPUTS = [
 `#!/bin/bash
 
 PASSWORD_FILE="/tmp/secret"
 MD5_HASH=$(cat /tmp/secret)
 PASSWORD_WRONG=1
-
 
 while [ $PASSWORD_WRONG -eq 1 ]
  do
@@ -140,14 +152,23 @@ To sit on my throne as the Prince of Bel-Air
 
 	function preInit() {
 		butt.addEventListener("click", function() {
-			overlayParent.removeChild(overlay);
+			overlay.setAttribute("hidden", "true");
 			gameInit();
+		});
+		nextbutt.addEventListener("click", function() {
+			overlay.setAttribute("hidden", "true");
+			actuallyNextLevel();
+		});
+		window.addEventListener("click", function() {
+			// console.log("clicked window");
+			textArea.focus();
 		});
 	}
 
 	function gameInit() {
 		gameStarted = true;
 		setScore(0);
+		GAME.level = 0;
 
 		nextLevel();
 		emitter.subscribe('event:timer-over', function(data) {
@@ -158,14 +179,15 @@ To sit on my throne as the Prince of Bel-Air
 			if (GAME.level >= LEVELS.length) {
 				gameOver();
 			} else {
+				// console.log("game level: " + GAME.level);
 				nextLevel();
 			}
 		});
-		console.log("gamestarted");
+		// console.log("gamestarted");
 	}
 
 	function timerInit(seconds) {
-		for (var i = seconds; i > 0; i--) {
+		for (var i = seconds; i >= 0; i--) {
 			(function(i) {
 				setTimeout(function() {
 					timerArea.innerHTML = i;
@@ -177,11 +199,12 @@ To sit on my throne as the Prince of Bel-Air
 			emitter.emit('event:timer-over', {});
 		}, seconds*SECONDS);
 
-		console.log("timer init");
+		// console.log("timer init");
 	}
 
 	// Solely focused on level transition, garbage pickup for later.
 	function nextLevel() {
+		gameStarted = false;
 		textArea.value = "";
 		textArea.focus();
 
@@ -191,18 +214,30 @@ To sit on my throne as the Prince of Bel-Air
 		purposeArea.innerHTML = LEVELS[GAME.level];
 
 		cursor = 0;
+		// TODO: Animation/transition to between levels stat
+		showPopup();
+	}
 
-		// TODO: Animation/transition to between levels state
-		// TODO: initialize timer after transitioning to that state
-		timerInit(LEVEL_TIME);
+	function actuallyNextLevel() {
+		showGetHacking("HACK " + LEVELS[GAME.level]);
+		var b_url = BACKGROUND_LINKS[GAME.level];
+		gameArea.setAttribute("style", "background-image: url(" + b_url + ")")
+ 
+ 		gameStarted = true;
+ 		timerInit(LEVEL_TIME);
 	}
 
 	function gameOver() {
 		gameStarted = false;
-		console.log("GAME OVER");
+		// console.log("GAME OVER");
 
+		overlay.removeAttribute("hidden");
+		popupHeader.innerHTML = "FINAL SCORE: " + GAME.score;
+		popupContent.innerHTML = "";
+		butt.innerHTML = "PLAY AGAIN";
+		nextbutt.setAttribute("hidden", "true");
 		butt.removeAttribute("hidden");
-		// TODO: display some kind of game over/submit score message
+		// TODO: dsplay some kind of game over/submit score message
 	}
 
 	function computeEndScore(text) {
@@ -249,8 +284,8 @@ To sit on my throne as the Prince of Bel-Air
 			outputArea.innerHTML += currOut[(cursor % currOut.length)];
 		}
 		cursor++;
-		outputArea.scrollTop = outputArea.scrollHeight
-		// TODO: add some functionality to remove lines when it overflows the screen
+		if ((cursor % 50) === 0)
+			outputArea.scrollTop = outputArea.scrollHeight;
 	}
 
 	textArea.onkeydown = function(e) {
@@ -272,6 +307,24 @@ To sit on my throne as the Prince of Bel-Air
 
 		// Push the right letter to the thing
 		addOutput(textArea.value.length);
+	}
+
+	function showGetHacking(text) {
+		getHackingText.innerHTML = text;
+		getHacking.removeAttribute("hidden");
+		setTimeout(function() {
+			getHacking.setAttribute("hidden", "true");
+		}, GET_HACKING_TIME);
+	}
+
+	function showPopup() {
+		popupHeader.innerHTML = "OH NO!"
+		popupContent.innerHTML = POPUPS[GAME.level];
+		butt.setAttribute("hidden", "true");
+		nextbutt.removeAttribute("hidden");
+		nextbutt.innerHTML = "HACK " + LEVELS[GAME.level];
+
+		overlay.removeAttribute("hidden");
 	}
 
 	preInit();
