@@ -239,6 +239,12 @@ To sit on my throne as the Prince of Bel-Air
 
 		overlay.removeAttribute("hidden");
 		popupHeader.innerHTML = "FINAL SCORE: " + GAME.score;
+    if (GAME.score > 9000) {
+      popupContent.innerHTML = "Your hacking power level was sufficiently and you hacked into your soul. Good job!";
+    } else {
+      popupContent.innerHTML = "Your power level still needs work. Your mainframe got hacked. Try again?";
+    }
+
 		popupContent.innerHTML = "";
 		butt.innerHTML = "PLAY AGAIN";
 		nextbutt.setAttribute("hidden", "true");
