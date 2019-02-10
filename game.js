@@ -21,7 +21,7 @@ window.onload = function() {
 	var gameStarted = false;
 	var cursor = 0;
 
-	var GET_HACKING_TIME = 500; // Show get hacking notification for 2s
+	var GET_HACKING_TIME = 300; // Show get hacking notification for 200ms
 	var LEVEL_TIME = 10;
 	var SECONDS = 500; // change back to 1000 for normal time, shorten for testing
 	var KEY_SCORE = 30;
@@ -311,7 +311,14 @@ To sit on my throne as the Prince of Bel-Air
 
 	function showGetHacking(text) {
 		getHackingText.innerHTML = text;
-		getHacking.removeAttribute("hidden");
+		for (var i = 0; i <= 4; i++) {
+			setTimeout(function() {
+				getHacking.removeAttribute("hidden");
+			}, GET_HACKING_TIME * (2*i));
+			setTimeout(function() {
+				getHacking.setAttribute("hidden", "true");
+			}, GET_HACKING_TIME * (2*i+1));
+		}
 		setTimeout(function() {
 			getHacking.setAttribute("hidden", "true");
 		}, GET_HACKING_TIME);
