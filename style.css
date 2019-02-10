@@ -28,6 +28,26 @@ body {
   text-shadow: 4px 4px 0px green;
 }
 
+/* footer */
+footer {
+  position: fixed;
+  bottom: 0px;
+  padding-bottom: 2px;
+  padding-left:2px;
+  background-color: rgba(255,255,255,0.5);
+  font-size: 16px;
+}
+
+footer a {
+  color: black;
+  background-color: yellow;
+}
+
+footer a:hover {
+  color: yellow;
+  background-color: rgba(0,0,0,0.7);
+}
+
 /*
 #scoreArea {
   width: 10%;
