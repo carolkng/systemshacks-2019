@@ -1,0 +1,121 @@
+body {
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+  cursor: url(https://unpkg.com/nes.css/assets/cursor.png),auto;
+}
+
+/* Top status bar */
+#statusBar {
+  position: fixed;
+  display:flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  top:0;
+  width:100%;
+}
+
+.status {
+  font-size: 20px;
+  margin: 0px auto;
+  padding: 20px;
+  background: pink;
+  font-family: 'Press Start 2P', monospace;
+}
+/*
+#scoreArea {
+  width: 10%;
+}
+
+#timerArea {
+  width: 10%;
+}
+
+#purposeArea {
+  text-align: center;
+}
+*/
+
+/* Game Output area */
+#gameArea { 
+  background-size: cover;
+  width:100vw;
+  height:100vh;
+  /*background-image: url(https://assets.bwbx.io/images/users/iqjWHBFdfxIU/i1dsrniQcTQc/v0/1400x-1.jpg);
+  */
+
+  background-image: url(https://media.giphy.com/media/3oz8xxsp7ryA3iXpvO/giphy.gif);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#monitor {
+  margin: 0px auto;
+  border: 20px solid grey;
+  border-radius: 10px;
+  width: 560px;
+  height: 280px;
+  color: black;
+  margin
+}
+
+#output {
+  border-color: black;
+  border-width: 30px;
+  border-style:solid;
+  background: black;
+  color: #80FF80;
+  overflow: auto;
+  height:220px;
+}
+
+/* POPUP */
+#popup {
+  z-index: 100;
+  position: fixed;
+  margin: 10% 20%;
+  border: 10px solid red;
+  box-shadow: 2px 2px green;
+  background: black;
+  text-shadow: 2px 0px 0px yellow;
+  color: red;
+  padding: 40px;
+  font-size: 30px;
+}
+
+#overlay {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.5);
+  position:fixed;
+}
+
+#start {
+  position: relative;
+  width: 130px;
+
+  padding: 10px 20px;
+  margin: 4px;
+  text-align: center;
+  vertical-align: middle;
+  cursor: url(https://unpkg.com/nes.css/assets/cursor-click.png),pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: none;
+  font-size: 30px;
+  font-family: 'VT323', monospace;
+  color: #fff;
+  background-color: #209cee;
+  box-shadow: inset -4px -4px #006bb3;
+}
+
+#getHackingInner {
+
+}
+#getHacking {
+
+}
