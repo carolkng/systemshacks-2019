@@ -23,7 +23,7 @@ window.onload = function() {
 
 	var GET_HACKING_TIME = 300; // Show get hacking notification for 200ms
 	var LEVEL_TIME = 10;
-	var SECONDS = 500; // change back to 1000 for normal time, shorten for testing
+	var SECONDS = 750; // change back to 1000 for normal time, shorten for testing
 	var KEY_SCORE = 30;
 	var BONUS_SCORE = 20; // bonus score per letter pressed in the keyword list or whatever
 	var ENDING_BG = "https://media.giphy.com/media/MGaacoiAlAti0/giphy.gif";
@@ -150,7 +150,11 @@ To sit on my throne as the Prince of Bel-Air
 `
 	]
 
+	var OUTPUT_WORDS = [];
+
 	function preInit() {
+		initializeWords();
+
 		butt.addEventListener("click", function() {
 			overlay.setAttribute("hidden", "true");
 			gameInit();
@@ -277,11 +281,12 @@ To sit on my throne as the Prince of Bel-Air
 	}
 
 	function addOutput(len) {
-		var currOut = OUTPUTS[GAME.level];
+		//var currOut = OUTPUTS[GAME.level];
+		var currOut = OUTPUT_WORDS[GAME.level];
 		if (currOut[(cursor % currOut.length)] === "\n") {
 			outputArea.innerHTML += "<br>";
 		} else {
-			outputArea.innerHTML += currOut[(cursor % currOut.length)];
+			outputArea.innerHTML += currOut[(cursor % currOut.length)].replace("\n", "<br>") + " ";
 		}
 		cursor++;
 		if ((cursor % 50) === 0)
@@ -333,6 +338,11 @@ To sit on my throne as the Prince of Bel-Air
 
 		overlay.removeAttribute("hidden");
 	}
-
+	function initializeWords() {
+		var word_list;
+		for (var i = 0; i < OUTPUTS.length; i++) {
+			OUTPUT_WORDS.push(OUTPUTS[i].split(" "));
+		}
+	}
 	preInit();
 }
