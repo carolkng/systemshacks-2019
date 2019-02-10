@@ -4,6 +4,9 @@ body {
   cursor: url(https://unpkg.com/nes.css/assets/cursor.png),auto;
 }
 
+textarea {
+  font-size:24px;
+}
 /* Top status bar */
 #statusBar {
   position: fixed;
